@@ -20,5 +20,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('accounts.urls')),  #account 추가본 확인 필요
+    path('api/', include('posts.urls')),  # ✅ 여기에 추가!
 ]
-
