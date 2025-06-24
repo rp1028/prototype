@@ -10,15 +10,15 @@ from rest_framework.permissions import AllowAny
 
 class RegisterView(APIView):
     def post(self, request):
-        username = request.data.get('username')  # 이메일로 들어옴
+        username = request.data.get('username') 
         password = request.data.get('password')
-        nickname = request.data.get('nickname')  # 추가된 필드
+        nickname = request.data.get('nickname')  
 
         if User.objects.filter(username=username).exists():
             return Response({'error': '이미 존재하는 사용자입니다.'}, status=400)
 
         user = User.objects.create_user(username=username, password=password)
-        user.first_name = nickname  # 또는 별도 필드 추가했다면 user.nickname = ...
+        user.first_name = nickname  
         user.save()
 
         return Response({'message': '회원가입 성공'}, status=201)
@@ -43,13 +43,13 @@ class LogoutView(APIView):
     permission_classes = [AllowAny]
     
     def post(self, request):
-        refresh_token = request.data.get("refresh_token")  # .get()으로 안전하게 가져오기
+        refresh_token = request.data.get("refresh_token")
         if not refresh_token:
             return Response({"error": "refresh_token is required"}, status=status.HTTP_400_BAD_REQUEST)
         
         try:
             token = RefreshToken(refresh_token)
-            token.blacklist()  # 토큰 블랙리스트 등록 (무효화)
+            token.blacklist()  # 토큰 블랙리스트 등록
             return Response({"message": "로그아웃 완료"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"error": f"Invalid token: {str(e)}"}, status=status.HTTP_400_BAD_REQUEST)
