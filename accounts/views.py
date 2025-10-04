@@ -21,7 +21,14 @@ class RegisterView(APIView):
         user.first_name = nickname  
         user.save()
 
-        return Response({'message': '회원가입 성공'}, status=201)
+        return Response({
+            'message': '회원가입 성공',
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'nickname': user.first_name
+            }
+        }, status=201)
     
 class LoginView(APIView):
     def post(self, request):
@@ -37,6 +44,11 @@ class LoginView(APIView):
         return Response({
             'access': str(refresh.access_token),
             'refresh': str(refresh),
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'nickname': user.first_name or user.username
+            }
         })
     
 class LogoutView(APIView):
@@ -59,6 +71,7 @@ class UserView(APIView):
 
     def get(self, request):
         return Response({
+            'id': request.user.id,
             'username': request.user.username,
-            'id': request.user.id
+            'nickname': request.user.first_name or request.user.username
         })
