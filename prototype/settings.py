@@ -140,3 +140,8 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
 }
+# 미디어 파일을 URL로 접근하기 위한 경로
+MEDIA_URL = '/media/'
+
+# 미디어 파일이 저장될 실제 경로
+MEDIA_ROOT = BASE_DIR / 'media'
