@@ -11,16 +11,16 @@ class MusicAuthorSerializer(serializers.ModelSerializer):
 
 
 class MusicSerializer(serializers.ModelSerializer):
-    """음악 시리얼라이저"""
     author = MusicAuthorSerializer(read_only=True)
+    artist = serializers.CharField(allow_blank=True, required=False)  # ⭐ 추가!
     likes_count = serializers.IntegerField(read_only=True)
     is_liked = serializers.SerializerMethodField()
     
     class Meta:
         model = Music
-        fields = ['id', 'title', 'description', 'author', 'audio_file', 
-                  'cover_image', 'genre', 'duration', 'created_at', 
-                  'likes_count', 'is_liked']
+        fields = ['id', 'title', 'description', 'author', 'artist',  # ⭐ artist 추가!
+                  'audio_file', 'cover_image', 'genre', 'duration', 
+                  'created_at', 'likes_count', 'is_liked']
         read_only_fields = ['id', 'created_at', 'author']
     
     def get_is_liked(self, obj):
