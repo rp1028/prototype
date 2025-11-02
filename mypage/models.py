@@ -3,10 +3,10 @@ from django.contrib.auth.models import User
 
 
 class Music(models.Model):
-    """음악 작품 모델"""
     title = models.CharField(max_length=255, verbose_name="제목")
     description = models.TextField(blank=True, null=True, verbose_name="설명")
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='music_works', verbose_name="작성자")
+    artist = models.CharField(max_length=255, blank=True, null=True, verbose_name="아티스트명")  # ⭐ 추가!
     audio_file = models.FileField(upload_to='music/audio/', verbose_name="오디오 파일")
     cover_image = models.ImageField(upload_to='music/covers/', blank=True, null=True, verbose_name="커버 이미지")
     genre = models.CharField(max_length=100, blank=True, null=True, verbose_name="장르")
